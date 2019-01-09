@@ -12,6 +12,8 @@
 		06AB202A21E2B05400C6B3EF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06AB202821E2B05400C6B3EF /* Main.storyboard */; };
 		06AB202C21E2B05600C6B3EF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06AB202B21E2B05600C6B3EF /* Assets.xcassets */; };
 		06AB202F21E2B05600C6B3EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06AB202D21E2B05600C6B3EF /* LaunchScreen.storyboard */; };
+		06AB203721E2BF4000C6B3EF /* Set Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06AB203621E2BF4000C6B3EF /* Set Model.swift */; };
+		06AB203921E2BF7F00C6B3EF /* OldCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06AB203821E2BF7F00C6B3EF /* OldCard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		06AB202B21E2B05600C6B3EF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		06AB202E21E2B05600C6B3EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		06AB203021E2B05600C6B3EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		06AB203621E2BF4000C6B3EF /* Set Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Set Model.swift"; sourceTree = "<group>"; };
+		06AB203821E2BF7F00C6B3EF /* OldCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +61,8 @@
 				06AB202421E2B05400C6B3EF /* AppDelegate.swift */,
 				06AB202621E2B05400C6B3EF /* ViewController.swift */,
 				06AB202821E2B05400C6B3EF /* Main.storyboard */,
+				06AB203621E2BF4000C6B3EF /* Set Model.swift */,
+				06AB203821E2BF7F00C6B3EF /* OldCard.swift */,
 				06AB202B21E2B05600C6B3EF /* Assets.xcassets */,
 				06AB202D21E2B05600C6B3EF /* LaunchScreen.storyboard */,
 				06AB203021E2B05600C6B3EF /* Info.plist */,
@@ -137,6 +143,8 @@
 			files = (
 				06AB202721E2B05400C6B3EF /* ViewController.swift in Sources */,
 				06AB202521E2B05400C6B3EF /* AppDelegate.swift in Sources */,
+				06AB203921E2BF7F00C6B3EF /* OldCard.swift in Sources */,
+				06AB203721E2BF4000C6B3EF /* Set Model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
