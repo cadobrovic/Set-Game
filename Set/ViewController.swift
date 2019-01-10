@@ -29,6 +29,11 @@ class ViewController: UIViewController {
 		
 	}//end func
 	
+	@IBAction func touchDeal3NewCards(_ sender: UIButton) {
+		game.deal3NewCards()
+	}
+	
+	
 	@IBAction func touchCard(_ sender: UIButton) {
 		if let cardIndex = cardButtons.firstIndex(of: sender){
 			game.chooseCard(at: cardIndex)
@@ -38,23 +43,30 @@ class ViewController: UIViewController {
 	
 	func updateViewFromModel(){
 		//TODO: update view based on changes in Set
-		for index in game.cards.indices {
+		for index in cardButtons.indices {
 			let button = cardButtons[index]
-			let card = game.cards[index]
-			if game.selectedCards.contains(card){
-				button.backgroundColor = UIColor.white
-				button.setAttributedTitle(setSymbolAttributes(for: card), for: UIControl.State.normal
-				)
-			}
+			if index < game.dealtCards.count {
+				let card = game.cards[index]
+				if game.selectedCards.contains(card){
+					button.backgroundColor = UIColor.white
+					button.setAttributedTitle(setSymbolAttributes(for: card), for: UIControl.State.normal
+					)
+				}//end if
+				else {
+					button.backgroundColor = UIColor.orange
+					button.setTitle("", for: UIControl.State.normal)
+					button.setAttributedTitle(NSAttributedString(string: ""), for: UIControl.State.normal)
+				}//end else
+			}//end if
 			else {
-				button.backgroundColor = UIColor.orange
+				button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
 				button.setTitle("", for: UIControl.State.normal)
-			}
-		}
+				button.setAttributedTitle(NSAttributedString(string: ""), for: UIControl.State.normal)
+			}//end else
+		}//end for
 	}//end func
 	
-	//some characters: ▲ ● ■
-	
+
 	//MARK: Newest system of handling permutations
 	var symbolsDictionary: [String:Int] = ["▲":27, "●":27, "■":27]
 	var numberOfSymbolsDictionary: [Int:Int] = [1:27, 2:27, 3:27]
@@ -73,7 +85,6 @@ class ViewController: UIViewController {
 		fillsDicionary[fill]! > 0 ? fillsDicionary.updateValue(fillsDicionary[fill]! - 1, forKey: fill) : fillsDicionary.removeValue(forKey: fill)
 		print("fillsDictionary now: \(fillsDicionary)")
 	}//end func
-	
 	
 	//MARK: [cardIndex:attribute] dictionaries
 	var titleDictionary = [SetCard:String]()
@@ -147,4 +158,25 @@ extension Dictionary {
 	subscript(i: Int) -> (key: Key, value: Value)? {
 		return self[index(startIndex, offsetBy: i)]
 	}
+}
+
+/**
+Takes an Int and returns a random number
+between 0 and that Int.
+
+Works with negative signed Ints as well.
+*/
+extension Int {
+	var randomize: Int {
+		if self > 0 {
+			return Int(arc4random_uniform(UInt32(self)))
+		}
+		else if self < 0 {
+			return -Int(arc4random_uniform(UInt32(abs(self))))
+		}
+		else {
+			return 0
+		}
+	}
+	
 }
