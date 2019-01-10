@@ -13,15 +13,19 @@ class Set {
 	var selectedCards = [SetCard]()
 	var dealtCards = [SetCard]()
 	init(){
+		for _ in 0...80 {
+			let card = SetCard()
+			cards.append(card)
+		}
 		dealTwelveInitialCards()
-		//shuffleCards()
+		shuffleCards()
+		print("cards.count: \(cards.count)")
+
 	}
 	
 	func dealTwelveInitialCards() {
-		for _ in 0...11 {
-			let card = SetCard()
-			cards.append(card)
-			dealtCards.append(card)
+		for i in 0...11 {
+			dealtCards.append(cards[i])
 		}
 	}
 	
@@ -41,6 +45,22 @@ class Set {
 			selectedCards.append(cards[index])
 		}
 	}
+	
+	/**
+	Takes the cards array and randomizes the
+	elements within.
+	*/
+	func shuffleCards() {
+		for _ in 0...100 {
+			for index in cards.indices {
+				var temp = SetCard()
+				temp = cards[index]
+				let randomIndex = cards.count.randomize
+				cards[index] = cards[randomIndex]
+				cards[randomIndex] = temp
+			}//end inner for
+		}//end outer for
+	}//end func
 	
 	
 	
