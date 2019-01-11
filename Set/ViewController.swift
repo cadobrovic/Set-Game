@@ -51,16 +51,20 @@ class ViewController: UIViewController {
 		for index in cardButtons.indices {
 			let button = cardButtons[index]
 			if index < game.dealtCards.count {
-				let card = game.cards[index]
+				let card = game.dealtCards[index]
 				if game.selectedCards.contains(card){
 					button.backgroundColor = UIColor.white
 					button.setAttributedTitle(setAttributes(for: card), for: UIControl.State.normal
 					)
+					button.layer.borderWidth = 3.0
+					button.layer.borderColor = UIColor.blue.cgColor
 				}//end if
 				else {
 					button.backgroundColor = UIColor.orange
 					button.setTitle("", for: UIControl.State.normal)
 					button.setAttributedTitle(NSAttributedString(string: ""), for: UIControl.State.normal)
+					button.layer.borderWidth = 0
+					button.layer.borderColor = UIColor.blue.cgColor
 				}//end else
 			}//end if
 			else {
