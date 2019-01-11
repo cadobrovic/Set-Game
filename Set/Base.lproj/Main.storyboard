@@ -35,6 +35,15 @@
                                     <action selector="touchNewGame:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vZ4-g7-7zF"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Onm-ln-rx8">
+                                <rect key="frame" x="355" y="758" width="393" height="119"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="40"/>
+                                <state key="normal" title="Deal 3 New Cards"/>
+                                <connections>
+                                    <action selector="touchDeal3NewCards:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tiG-gf-qYw"/>
+                                </connections>
+                            </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="SLX-uW-J55">
                                 <rect key="frame" x="50" y="84" width="668" height="490"/>
                                 <subviews>
@@ -316,13 +325,13 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Onm-ln-rx8">
-                                <rect key="frame" x="355" y="758" width="393" height="119"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q3e-Re-umP">
+                                <rect key="frame" x="20" y="758" width="273" height="119"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="40"/>
-                                <state key="normal" title="Deal 3 New Cards"/>
+                                <state key="normal" title="Shuffle"/>
                                 <connections>
-                                    <action selector="touchDeal3NewCards:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tiG-gf-qYw"/>
+                                    <action selector="touchShuffle:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AQc-Sz-TDH"/>
                                 </connections>
                             </button>
                         </subviews>

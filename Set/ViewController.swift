@@ -29,6 +29,11 @@ class ViewController: UIViewController {
 		
 	}//end func
 	
+	@IBAction func touchShuffle(_ sender: UIButton) {
+		game.shuffleCards()
+	}
+	
+	
 	@IBAction func touchDeal3NewCards(_ sender: UIButton) {
 		game.deal3NewCards()
 	}
@@ -69,7 +74,7 @@ class ViewController: UIViewController {
 	//MARK: [cardIndex:attribute] dictionaries
 	var titleDictionary = [SetCard:String]()
 	var attributesDictionary = [SetCard : [NSAttributedString.Key:Any] ]()
-	let symbolsDictionary: [Int:String] = [1:"▲", 2:"●", 3:"●"]
+	let symbolsDictionary: [Int:String] = [1:"▲", 2:"●", 3:"■"]
 	let fillsDictionary: [Int:(CGFloat, Double)] = [1:(1.0,-1.0), 2:(0.15,-1.0), 3:(1.0,2.0)]
 	let colorsDictionary: [Int:UIColor] = [1:UIColor.red, 2:UIColor.green, 3:UIColor.purple]
 	/**
@@ -85,7 +90,6 @@ class ViewController: UIViewController {
 	*/
 	func setAttributes(for card: SetCard) -> NSAttributedString {
 		if titleDictionary[card] == nil, attributesDictionary[card] == nil {
-			//print("card: \(card)")
 			var title = ""
 			let symbol = symbolsDictionary[card.props[0]]
 			let numberOfSymbols = card.props[1]

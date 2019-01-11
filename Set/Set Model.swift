@@ -18,7 +18,7 @@ class Set {
 			cards.append(card)
 		}
 		dealTwelveInitialCards()
-		shuffleCards()
+		//shuffleCards()
 		print("cards.count: \(cards.count)")
 
 	}
@@ -30,13 +30,14 @@ class Set {
 	}
 	
 	func deal3NewCards() {
-		
+		//TODO: Implement
 	}
 	
 	func chooseCard(at index: Int) {
 		//TODO:
 		//1. Compare just selected card to array of
 		//	 already selected cards.
+		//2. Determine a match
 		if !selectedCards.contains(cards[index]), selectedCards.count < 3 {
 			selectedCards.append(cards[index])
 		}
@@ -44,7 +45,44 @@ class Set {
 			selectedCards.removeAll()
 			selectedCards.append(cards[index])
 		}
+		
+		if selectedCards.count == 3 {
+			checkForMatch(selectedCards)
+		}
 	}
+	
+	func checkForMatch(_ selectedCards: [SetCard]) {
+		var matchCount = 0
+		for i in 0...3 {
+			var sortedCards = selectedCards.sorted(by: { $0.props[i] < $1.props[i] })
+			print("props[\(i)] should present as: \(sortedCards[0].props[i]) < \(sortedCards[1].props[i]) < \(sortedCards[2].props[i])")
+			if sortedCards[0].props[i] == sortedCards[1].props[i] {
+				if sortedCards[0].props[i] == sortedCards[2].props[i] {
+					print("111 TRUE")
+					matchCount += 1
+				}
+				else {
+					print("222 FALSE")
+				}
+			}
+			else {
+				if sortedCards[1].props[i] == sortedCards[2].props[i] {
+					print("333 FALSE")
+				}
+				else {
+					print("444 TRUE")
+					matchCount += 1
+				}
+			}
+		}
+		if matchCount == 4 {
+			print("MATCH")
+		}
+		else {
+			print("NO MATCH")
+		}
+	}
+	
 	
 	/**
 	Takes the cards array and randomizes the

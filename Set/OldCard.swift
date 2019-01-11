@@ -47,7 +47,6 @@ struct SetCard: Hashable {
 	init() {
 		self.props = SetCard.getUniqueProps()
 		self.identifier = SetCard.getUniqueIdentifier()
-		
 	}
 	
 	static func ==(lhs: SetCard, rhs: SetCard) -> Bool {
