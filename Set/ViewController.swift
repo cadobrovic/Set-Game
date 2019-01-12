@@ -25,7 +25,7 @@ class ViewController: UIViewController {
 	
 	@IBAction func touchNewGame(_ sender: UIButton) {
 		//TODO: implement new game functionality
-		print("Set card index 0: \(game.cards[0])")
+		print("Set card index 0: \(game.deck[0])")
 		
 	}//end func
 	
@@ -35,7 +35,14 @@ class ViewController: UIViewController {
 	
 	
 	@IBAction func touchDeal3NewCards(_ sender: UIButton) {
-		game.deal3NewCards()
+		if game.hasMatch {
+			game.replaceCards()
+		}
+		else {
+			game.deal3NewCards()
+		}
+		updateViewFromModel()
+		
 	}
 	
 	
@@ -57,14 +64,14 @@ class ViewController: UIViewController {
 					button.setAttributedTitle(setAttributes(for: card), for: UIControl.State.normal
 					)
 					button.layer.borderWidth = 3.0
-					button.layer.borderColor = UIColor.blue.cgColor
+					button.layer.borderColor = game.hasMatch ? UIColor.green.cgColor : UIColor.blue.cgColor
 				}//end if
 				else {
 					button.backgroundColor = UIColor.orange
 					button.setTitle("", for: UIControl.State.normal)
 					button.setAttributedTitle(NSAttributedString(string: ""), for: UIControl.State.normal)
 					button.layer.borderWidth = 0
-					button.layer.borderColor = UIColor.blue.cgColor
+					
 				}//end else
 			}//end if
 			else {
