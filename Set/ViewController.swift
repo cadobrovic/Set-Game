@@ -14,7 +14,7 @@ class ViewController: UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
+		 self.view.backgroundColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1)
 		updateViewFromModel()
 	}
 	@IBOutlet var cardButtons: [UIButton]!
@@ -24,9 +24,8 @@ class ViewController: UIViewController {
 	var attributes = [NSAttributedString.Key:Any]()
 	
 	@IBAction func touchNewGame(_ sender: UIButton) {
-		//TODO: implement new game functionality
-		print("Set card index 0: \(game.deck[0])")
-		
+		game.startNewGame()
+		updateViewFromModel()
 	}//end func
 	
 	@IBAction func touchShuffle(_ sender: UIButton) {
@@ -55,19 +54,25 @@ class ViewController: UIViewController {
 	
 	func updateViewFromModel(){
 		//TODO: update view based on changes in Set
+		scoreLabel.text = "Score: \(game.score)"
 		for index in cardButtons.indices {
 			let button = cardButtons[index]
+			button.titleLabel?.textAlignment = .natural
+			button.titleLabel?.lineBreakMode = .byWordWrapping
+
 			if index < game.dealtCards.count {
 				let card = game.dealtCards[index]
-				if game.selectedCards.contains(card){
+				if game.selectedCards.contains(card), game.dealtCards.contains(card){
 					button.backgroundColor = UIColor.white
 					button.setAttributedTitle(setAttributes(for: card), for: UIControl.State.normal
 					)
 					button.layer.borderWidth = 3.0
+					print("hasMatch: \(game.hasMatch)")
 					button.layer.borderColor = game.hasMatch ? UIColor.green.cgColor : UIColor.blue.cgColor
+					
 				}//end if
 				else {
-					button.backgroundColor = UIColor.orange
+					button.backgroundColor = #colorLiteral(red: 0.8321695924, green: 0.985483706, blue: 0.4733308554, alpha: 1)
 					button.setTitle("", for: UIControl.State.normal)
 					button.setAttributedTitle(NSAttributedString(string: ""), for: UIControl.State.normal)
 					button.layer.borderWidth = 0
@@ -78,6 +83,7 @@ class ViewController: UIViewController {
 				button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
 				button.setTitle("", for: UIControl.State.normal)
 				button.setAttributedTitle(NSAttributedString(string: ""), for: UIControl.State.normal)
+				button.layer.borderWidth = 0
 			}//end else
 		}//end for
 	}//end func
@@ -109,7 +115,7 @@ class ViewController: UIViewController {
 			let color = colorsDictionary[card.props[3]]
 			
 			for _ in 0..<numberOfSymbols {
-				title += symbol ?? "error"
+				title = title + symbol! + "\n"
 			}
 			titleDictionary[card] = title
 			

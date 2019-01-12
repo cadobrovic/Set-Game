@@ -14,7 +14,7 @@ struct SetCard: Hashable {
 	
 	// [symbol, numberOfSymbols, fill, color]
 	var props: [Int] = []
-	
+	var isMatched = false
 	private var identifier: Int
 	private static var identifierFactory = 0
 	
@@ -42,6 +42,14 @@ struct SetCard: Hashable {
 			symFac.loop1To3()
 		}
 		return [symFac, numFac, fillFac, colorFac]
+	}
+	
+	static func reset(){
+		symFac = 0
+		numFac = 0
+		fillFac = 0
+		colorFac = 0
+		incrementor = 0
 	}
 	
 	init() {

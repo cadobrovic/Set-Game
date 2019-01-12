@@ -13,51 +13,76 @@ class Set {
 	var selectedCards = [SetCard]()
 	var dealtCards = [SetCard]()
 	var hasMatch = false
+	var score = 0
 	init(){
+		startNewGame()
+	}
+	
+	func dealTwelveInitialCards() {
+		for _ in 0...11 {
+			dealtCards.append(deck.remove(at: 0))
+		}
+		print("dealtCards.count: \(dealtCards.count)")
+		print("deck.count: \(deck.count)")
+	}
+	
+	func deal3NewCards() {
+		if deck.count >= 3, dealtCards.count < 24 {
+				for _ in 0...2 {
+					dealtCards.append(deck.remove(at: 0))
+				}
+				print("dealtCards.count: \(dealtCards.count)")
+		}
+		else {
+			print("NOT ENOUGH SPACE IN UI")
+		}
+	}
+	
+	func startNewGame() {
+		selectedCards.removeAll()
+		dealtCards.removeAll()
+		deck.removeAll()
+		score = 0
+		SetCard.reset()
 		for _ in 0...80 {
 			let card = SetCard()
 			deck.append(card)
 		}
 		//shuffleCards()
-		print("cards.count: \(deck.count)")
-		dealTwelveInitialCards()
-		
-
-	}
-	
-	func dealTwelveInitialCards() {
-		for i in 0...11 {
-			dealtCards.append(deck.remove(at: 0))
-			print("dealtCards: \(dealtCards[i])")
-		}
-	}
-	
-	func deal3NewCards() {
 		print("deck.count: \(deck.count)")
-		if deck.count >= 3 {
-			if dealtCards.count <= 29 {
-				for _ in 0...2 {
-					dealtCards.append(deck.remove(at: 0))
-				}
-			}
-			print("NOT ENOUGH SPACE IN UI")
-		}
+		dealTwelveInitialCards()
 	}
 	
 	func chooseCard(at index: Int) {
+		print("cardButton index: \(index)")
 		if !selectedCards.contains(dealtCards[index]), selectedCards.count < 3 {
 			selectedCards.append(dealtCards[index])
 			if selectedCards.count == 3 {
 				checkForMatch(selectedCards)
+				if !hasMatch {
+					score -= 1
+				}
 			}
 		}
 		else if !selectedCards.contains(dealtCards[index]), selectedCards.count >= 3 {
-			if hasMatch {
-				replaceCards()
+			if hasMatch && deck.count == 0 {
 				hasMatch = false
+				print("FOO")
+				dealtCards.removeAll(where: { selectedCards.contains($0) })
+				selectedCards.removeAll()
+				
+				selectedCards.append(dealtCards[index-(index-(dealtCards.count-1))])
 			}
-			selectedCards.removeAll()
-			selectedCards.append(dealtCards[index])
+			else {
+				print("BAR")
+				if hasMatch {
+					score += 10
+					replaceCards()
+					hasMatch = false
+				}
+				selectedCards.removeAll()
+				selectedCards.append(dealtCards[index])
+			}
 		}
 		else if selectedCards.contains(dealtCards[index]) {
 			selectedCards.removeAll(where: { $0 == dealtCards[index] })
@@ -71,29 +96,23 @@ class Set {
 			var sortedCards = selectedCards.sorted(by: { $0.props[i] < $1.props[i] })
 			if sortedCards[0].props[i] == sortedCards[1].props[i] {
 				if sortedCards[0].props[i] == sortedCards[2].props[i] {
-					print("111 TRUE")
 					matchCount += 1
 				}
 				else {
-					print("222 FALSE")
 				}
 			}
 			else {
 				if sortedCards[1].props[i] == sortedCards[2].props[i] {
-					print("333 FALSE")
 				}
 				else {
-					print("444 TRUE")
 					matchCount += 1
 				}
 			}
 		}
 		if matchCount == 4 {
-			print("MATCH")
 			hasMatch = true
 		}
 		else {
-			print("NO MATCH")
 			hasMatch = false
 		}
 	}
@@ -102,8 +121,7 @@ class Set {
 		dealtCards.removeAll(where: { selectedCards.contains($0) })
 		deal3NewCards()
 	}
-	
-	
+
 	/**
 	Takes the cards array and randomizes the
 	elements within.
