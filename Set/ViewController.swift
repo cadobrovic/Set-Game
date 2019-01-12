@@ -28,10 +28,6 @@ class ViewController: UIViewController {
 		updateViewFromModel()
 	}//end func
 	
-	@IBAction func touchShuffle(_ sender: UIButton) {
-		game.shuffleCards()
-	}
-	
 	
 	@IBAction func touchDeal3NewCards(_ sender: UIButton) {
 		if game.hasMatch {
@@ -92,7 +88,7 @@ class ViewController: UIViewController {
 	var titleDictionary = [SetCard:String]()
 	var attributesDictionary = [SetCard : [NSAttributedString.Key:Any] ]()
 	let symbolsDictionary: [Int:String] = [1:"▲", 2:"●", 3:"■"]
-	let fillsDictionary: [Int:(CGFloat, Double)] = [1:(1.0,-1.0), 2:(0.15,-1.0), 3:(1.0,2.0)]
+	let fillsDictionary: [Int:(CGFloat, Double)] = [1:(1.0,-1.0), 2:(0.15,-2.0), 3:(1.0,2.0)]
 	let colorsDictionary: [Int:UIColor] = [1:UIColor.red, 2:UIColor.green, 3:UIColor.purple]
 	/**
 	- Sets an attributed string to a given SetCard. The symbols
@@ -117,13 +113,14 @@ class ViewController: UIViewController {
 			for _ in 0..<numberOfSymbols {
 				title = title + symbol! + "\n"
 			}
+			title = title.trimmingCharacters(in: .whitespacesAndNewlines)
 			titleDictionary[card] = title
 			
 			let symbolAttributes: [NSAttributedString.Key:Any] = [
 				.strokeWidth : fill.strokeWidth,
 				.strokeColor : color as Any,
 				.foregroundColor : color?.withAlphaComponent(fill.alpha) as Any,
-				.font : UIFont.systemFont(ofSize: 25)
+				.font : UIFont.systemFont(ofSize: 35)
 			]
 			attributesDictionary[card] = symbolAttributes
 		}
