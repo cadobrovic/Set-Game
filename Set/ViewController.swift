@@ -11,25 +11,34 @@ import UIKit
 class ViewController: UIViewController {
 	
 	lazy var game = Set()
+	var timer = Timer()
+	var time = 0
+	var selectedColor = #colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 1)
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		 self.view.backgroundColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1)
 		updateViewFromModel()
+		timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(ViewController.tickUp), userInfo: nil, repeats: true)
 	}
 	@IBOutlet var cardButtons: [UIButton]!
 	
 	@IBOutlet weak var scoreLabel: UILabel!
 	
+	@IBOutlet weak var timeElapsedLabel: UILabel!
+	
 	var attributes = [NSAttributedString.Key:Any]()
 	
 	@IBAction func touchNewGame(_ sender: UIButton) {
+		resetTimer()
+		timeElapsedLabel.text = "Time Elapsed: \(time)"
 		game.startNewGame()
 		updateViewFromModel()
 	}//end func
 	
 	
 	@IBAction func touchDeal3NewCards(_ sender: UIButton) {
+		//re-set timer
 		if game.hasMatch {
 			game.replaceCards()
 		}
@@ -43,39 +52,57 @@ class ViewController: UIViewController {
 	
 	@IBAction func touchCard(_ sender: UIButton) {
 		if let cardIndex = cardButtons.firstIndex(of: sender){
+			if game.hasMatch {
+				resetTimer()
+			}
 			game.chooseCard(at: cardIndex)
+			if game.hasMatch {
+				timer.invalidate()
+			}
 			updateViewFromModel()
+			
 		}
 	}//end func
+	
+	func resetTimer() {
+		timer.invalidate()
+		time = 0
+		timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(ViewController.tickUp), userInfo: nil, repeats: true)
+	}
+	
+	@objc func tickUp() {
+		time += 1
+		timeElapsedLabel.text = "Time Elapsed: \(time)"
+	}
 	
 	func updateViewFromModel(){
 		//TODO: update view based on changes in Set
 		scoreLabel.text = "Score: \(game.score)"
+		
 		for index in cardButtons.indices {
 			let button = cardButtons[index]
 			button.titleLabel?.textAlignment = .natural
 			button.titleLabel?.lineBreakMode = .byWordWrapping
-
 			if index < game.dealtCards.count {
 				let card = game.dealtCards[index]
-				if game.selectedCards.contains(card), game.dealtCards.contains(card){
+				if game.dealtCards.contains(card) {
+					button.isEnabled = true
 					button.backgroundColor = UIColor.white
 					button.setAttributedTitle(setAttributes(for: card), for: UIControl.State.normal
 					)
-					button.layer.borderWidth = 3.0
-					print("hasMatch: \(game.hasMatch)")
-					button.layer.borderColor = game.hasMatch ? UIColor.green.cgColor : UIColor.blue.cgColor
+					if game.selectedCards.contains(card) {
+					button.layer.borderWidth = 7.0
+					button.layer.borderColor = game.hasMatch ? UIColor.green.cgColor : selectedColor.cgColor
+					}
+					else {
+						button.layer.borderWidth = 0.0
+						button.layer.borderColor = UIColor.white.cgColor
+					}
 					
 				}//end if
-				else {
-					button.backgroundColor = #colorLiteral(red: 0.8321695924, green: 0.985483706, blue: 0.4733308554, alpha: 1)
-					button.setTitle("", for: UIControl.State.normal)
-					button.setAttributedTitle(NSAttributedString(string: ""), for: UIControl.State.normal)
-					button.layer.borderWidth = 0
-					
-				}//end else
 			}//end if
 			else {
+				button.isEnabled = false
 				button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
 				button.setTitle("", for: UIControl.State.normal)
 				button.setAttributedTitle(NSAttributedString(string: ""), for: UIControl.State.normal)

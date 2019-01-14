@@ -14,6 +14,7 @@ class Set {
 	var dealtCards = [SetCard]()
 	var hasMatch = false
 	var score = 0
+	var startTime = Date()
 	init(){
 		startNewGame()
 	}
@@ -22,8 +23,6 @@ class Set {
 		for _ in 0...11 {
 			dealtCards.append(deck.remove(at: 0))
 		}
-		print("dealtCards.count: \(dealtCards.count)")
-		print("deck.count: \(deck.count)")
 	}
 	
 	func deal3NewCards() {
@@ -31,7 +30,6 @@ class Set {
 				for _ in 0...2 {
 					dealtCards.append(deck.remove(at: 0))
 				}
-				print("dealtCards.count: \(dealtCards.count)")
 		}
 		else {
 			print("NOT ENOUGH SPACE IN UI")
@@ -44,30 +42,29 @@ class Set {
 		deck.removeAll()
 		score = 0
 		SetCard.reset()
-		for _ in 0...80 {
+		for _ in 0...14 {
 			let card = SetCard()
 			deck.append(card)
 		}
-		//shuffleCards()
-		print("deck.count: \(deck.count)")
+		shuffleCards()
 		dealTwelveInitialCards()
+		startTime = Date()
 	}
 	
 	func chooseCard(at index: Int) {
-		print("cardButton index: \(index)")
+		let elapsed = Date().timeIntervalSince(startTime)
+		print("elapsed: \(elapsed)")
 		if !selectedCards.contains(dealtCards[index]), selectedCards.count < 3 {
 			selectedCards.append(dealtCards[index])
 			if selectedCards.count == 3 {
-				checkForMatch(selectedCards)
-				if !hasMatch {
-					score -= 1
-				}
+				checkForMatch(amongCards: selectedCards)
 			}
 		}
 		else if !selectedCards.contains(dealtCards[index]), selectedCards.count >= 3 {
 			if hasMatch && deck.count == 0 {
 				hasMatch = false
 				print("FOO")
+				addPoints(for: elapsed)
 				dealtCards.removeAll(where: { selectedCards.contains($0) })
 				selectedCards.removeAll()
 				
@@ -76,7 +73,8 @@ class Set {
 			else {
 				print("BAR")
 				if hasMatch {
-					score += 10
+					addPoints(for: elapsed)
+					startTime = Date()
 					replaceCards()
 					hasMatch = false
 				}
@@ -85,12 +83,15 @@ class Set {
 			}
 		}
 		else if selectedCards.contains(dealtCards[index]) {
+			if !hasMatch {
+				score -= score == 0 ? 0 : 5
+			}
 			selectedCards.removeAll(where: { $0 == dealtCards[index] })
 			hasMatch = false
 		}
 	}
 	
-	func checkForMatch(_ selectedCards: [SetCard]) {
+	func checkForMatch(amongCards selectedCards: [SetCard]) {
 		var matchCount = 0
 		for i in 0...3 {
 			var sortedCards = selectedCards.sorted(by: { $0.props[i] < $1.props[i] })
@@ -120,6 +121,20 @@ class Set {
 	func replaceCards() {
 		dealtCards.removeAll(where: { selectedCards.contains($0) })
 		deal3NewCards()
+	}
+	
+	func addPoints(for elapsedTime: TimeInterval) {
+		print("POINTS ADDED")
+		switch elapsedTime{
+		case 0.0..<10.0:
+			score += 100
+		case 10.0..<30.0:
+			score += 50
+		case 30.0..<120.0:
+			score += 20
+		default:
+			score += 10
+		}
 	}
 
 	/**
