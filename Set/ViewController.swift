@@ -27,6 +27,17 @@ class ViewController: UIViewController {
 	
 	@IBOutlet weak var timeElapsedLabel: UILabel!
 	
+	@IBOutlet weak var possibleMatchesLabel: UILabel!
+	
+	@IBAction func touchCheat(_ sender: UIButton) {
+		//TODO: identify either:
+		//1. two cards in a match
+		//2. a set.
+		game.findAMatch()
+		updateViewFromModel()
+		game.cheatCards.removeAll()
+	}
+	
 	var attributes = [NSAttributedString.Key:Any]()
 	
 	@IBAction func touchNewGame(_ sender: UIButton) {
@@ -80,9 +91,8 @@ class ViewController: UIViewController {
 	}
 	
 	func updateViewFromModel(){
-		//TODO: update view based on changes in Set
 		scoreLabel.text = "Score: \(game.score)"
-		
+		possibleMatchesLabel.text = "Possible Matches: \(game.numberOfMatches)"
 		for index in cardButtons.indices {
 			let button = cardButtons[index]
 			button.titleLabel?.textAlignment = .natural
@@ -98,10 +108,15 @@ class ViewController: UIViewController {
 					button.layer.borderWidth = 7.0
 					button.layer.borderColor = game.playerHasMatch ? UIColor.green.cgColor : selectedColor.cgColor
 					}
+					else if game.cheatCards.contains(card) {
+						button.layer.borderWidth = 7.0
+						button.layer.borderColor = UIColor.green.cgColor
+					}
 					else {
 						button.layer.borderWidth = 0.0
 						button.layer.borderColor = UIColor.white.cgColor
 					}
+					
 					
 				}//end if
 			}//end if

@@ -13,9 +13,11 @@ class SetGame {
 	var selectedCards = Set<SetCard>()
 	var matchedCards = [SetCard]()
 	var matchedDictionary = [Int:Set<SetCard>]()
+	var cheatCards = Set<SetCard>()
 	var dealtCards = [SetCard]()
 	var playerHasMatch = false
 	var score = 0
+	var numberOfMatches = 0
 	var startTime = Date()
 	init(){
 		startNewGame()
@@ -33,8 +35,12 @@ class SetGame {
 			startTime = Date()
 			score -= score >= 20 ? 20 : score
 			print("There was a match!")
+			//TODO: alert the player that
+			//there was a match
 		}
-		
+		if playerHasMatch {
+			dealtCards.removeAll(where: { selectedCards.contains($0) })
+		}
 		if deck.count >= 3, dealtCards.count < 24 {
 				for _ in 0...2 {
 					dealtCards.append(deck.remove(at: 0))
@@ -177,6 +183,7 @@ class SetGame {
 	-Param: cards is an Array of SetCard sturcts.
 	*/
 	func analyzeForMatch(in cards: [SetCard]) {
+		numberOfMatches = 0
 		var keyIncrementor = 0
 		matchedDictionary.removeAll()
 		var matchCount = 0
@@ -203,6 +210,7 @@ class SetGame {
 					matchedDictionary.updateValue([isolatedCards[0], isolatedCards[1], isolatedCards[2]], forKey: keyIncrementor)
 						matchCount = 0
 						print("THERE IS A MATCH!")
+						numberOfMatches += 1
 					}
 					matchCount = 0
 				}//end inner-most for
@@ -229,4 +237,9 @@ class SetGame {
 		}
 		return hasMatch
 	}
+
+	func findAMatch() {
+		cheatCards = matchedDictionary.first?.value ?? []
+	}
+
 }//end class

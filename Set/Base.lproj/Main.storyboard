@@ -20,13 +20,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rr3-eg-7Lx">
-                                <rect key="frame" x="477" y="885" width="261" height="119"/>
+                                <rect key="frame" x="527" y="931" width="211" height="73"/>
                                 <color key="backgroundColor" red="0.46202266219999999" green="0.83828371759999998" blue="1" alpha="0.26019370719178087" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="119" id="aLv-k3-s9d"/>
-                                    <constraint firstAttribute="width" constant="261" id="ieb-DG-aQ0"/>
+                                    <constraint firstAttribute="height" constant="73" id="aLv-k3-s9d"/>
+                                    <constraint firstAttribute="width" constant="211" id="ieb-DG-aQ0"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="40"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="30"/>
                                 <state key="normal" title="New Game">
                                     <color key="titleColor" red="1" green="0.83234566450000003" blue="0.47320586440000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -34,13 +34,27 @@
                                     <action selector="touchNewGame:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vZ4-g7-7zF"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lqT-zm-Uxd">
+                                <rect key="frame" x="510" y="766" width="228" height="67"/>
+                                <color key="backgroundColor" red="0.46202266219999999" green="0.83828371759999998" blue="1" alpha="0.26019370720000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="lqT-zm-Uxd" secondAttribute="height" multiplier="228:67" id="uhq-hS-p5n"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="30"/>
+                                <state key="normal" title="Cheat">
+                                    <color key="titleColor" red="1" green="0.83234566450000003" blue="0.47320586440000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="touchCheat:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rKx-Xu-PeX"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Onm-ln-rx8">
-                                <rect key="frame" x="353" y="758" width="385" height="121"/>
+                                <rect key="frame" x="445" y="839" width="293" height="87"/>
                                 <color key="backgroundColor" red="0.46202266219999999" green="0.83828371759999998" blue="1" alpha="0.26019370719178087" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="385" id="ASe-C5-0ND"/>
+                                    <constraint firstAttribute="width" constant="293" id="ASe-C5-0ND"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="40"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="30"/>
                                 <state key="normal" title="  Deal 3 New Cards  ">
                                     <color key="titleColor" red="1" green="0.83234566450000003" blue="0.47320586440000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -270,25 +284,40 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="83w-ow-wpl">
-                                <rect key="frame" x="20" y="885" width="295" height="115"/>
+                                <rect key="frame" x="20" y="918" width="295" height="82"/>
                                 <color key="backgroundColor" red="0.46202266219999999" green="0.83828371759999998" blue="1" alpha="0.26019370720000001" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="83w-ow-wpl" secondAttribute="height" multiplier="59:23" id="C1m-Di-QF0"/>
+                                    <constraint firstAttribute="width" secondItem="83w-ow-wpl" secondAttribute="height" multiplier="59:23" constant="84.652173913043498" id="C1m-Di-QF0"/>
                                     <constraint firstAttribute="width" constant="295" id="Evo-lk-oZq"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="50"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="40"/>
                                 <color key="textColor" red="1" green="0.83234566450000003" blue="0.47320586440000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="es4-No-Iem">
-                                <rect key="frame" x="20" y="758" width="295" height="115"/>
+                                <rect key="frame" x="20" y="839" width="295" height="71"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.46202266219999999" green="0.83828371759999998" blue="1" alpha="0.26019370720000001" colorSpace="custom" customColorSpace="sRGB"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Time Elapsed: 0">
                                         <attributes>
                                             <color key="NSColor" red="1" green="0.83234566450000003" blue="0.47320586440000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <font key="NSFont" size="41" name="HelveticaNeue-Bold"/>
+                                            <font key="NSFont" size="30" name="HelveticaNeue-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DCr-dq-XPO">
+                                <rect key="frame" x="20" y="760" width="295" height="71"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.46202266219999999" green="0.83828371759999998" blue="1" alpha="0.26019370720000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Possible Matches:">
+                                        <attributes>
+                                            <color key="NSColor" red="1" green="0.83234566450000003" blue="0.47320586440000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="25" name="HelveticaNeue-Bold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -300,20 +329,24 @@
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="rr3-eg-7Lx" secondAttribute="bottom" constant="20" symbolic="YES" id="5I4-lQ-BAD"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="83w-ow-wpl" secondAttribute="bottom" constant="24" id="6Di-oh-bHV"/>
-                            <constraint firstItem="rr3-eg-7Lx" firstAttribute="top" relation="lessThanOrEqual" secondItem="3wI-WF-k9S" secondAttribute="bottom" constant="200" id="LGe-Am-w5e"/>
-                            <constraint firstItem="Onm-ln-rx8" firstAttribute="top" relation="lessThanOrEqual" secondItem="3wI-WF-k9S" secondAttribute="bottom" constant="73" id="PgA-hm-lyO"/>
+                            <constraint firstItem="rr3-eg-7Lx" firstAttribute="top" relation="lessThanOrEqual" secondItem="3wI-WF-k9S" secondAttribute="bottom" constant="246" id="LGe-Am-w5e"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="lqT-zm-Uxd" secondAttribute="trailing" constant="30" id="Nc3-6x-NWF"/>
+                            <constraint firstItem="Onm-ln-rx8" firstAttribute="top" relation="lessThanOrEqual" secondItem="3wI-WF-k9S" secondAttribute="bottom" constant="154" id="PgA-hm-lyO"/>
                             <constraint firstItem="3wI-WF-k9S" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="TPO-N5-IeK"/>
                             <constraint firstItem="Onm-ln-rx8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="350" id="Vtq-to-h7D"/>
+                            <constraint firstItem="Onm-ln-rx8" firstAttribute="top" secondItem="lqT-zm-Uxd" secondAttribute="bottom" constant="6" id="XW8-u9-I4T"/>
                             <constraint firstItem="3wI-WF-k9S" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="70" id="Xjj-eK-xbg"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="rr3-eg-7Lx" secondAttribute="trailing" constant="30" id="eU1-Uh-ajv"/>
                             <constraint firstItem="83w-ow-wpl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="idR-CU-3cf"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Onm-ln-rx8" secondAttribute="bottom" constant="145" id="kbC-XE-9TC"/>
+                            <constraint firstItem="lqT-zm-Uxd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="510" id="j0b-cT-EYm"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Onm-ln-rx8" secondAttribute="bottom" constant="98" id="kbC-XE-9TC"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Onm-ln-rx8" secondAttribute="trailing" constant="30" id="ojm-DE-CQf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="3wI-WF-k9S" secondAttribute="trailing" constant="70" id="siJ-kT-Uvp"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="possibleMatchesLabel" destination="DCr-dq-XPO" id="1Fd-Tw-JFh"/>
                         <outlet property="scoreLabel" destination="83w-ow-wpl" id="C2l-p8-sgB"/>
                         <outlet property="timeElapsedLabel" destination="es4-No-Iem" id="U4f-id-cUO"/>
                         <outletCollection property="cardButtons" destination="yry-6q-RL0" collectionClass="NSMutableArray" id="0Ya-cF-JbE"/>
