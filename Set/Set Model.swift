@@ -8,11 +8,13 @@
 
 import Foundation
 
-class Set {
+class SetGame {
 	var deck = [SetCard]()
-	var selectedCards = [SetCard]()
+	var selectedCards = Set<SetCard>()
+	var matchedCards = [SetCard]()
+	var matchedDictionary = [Int:Set<SetCard>]()
 	var dealtCards = [SetCard]()
-	var hasMatch = false
+	var playerHasMatch = false
 	var score = 0
 	var startTime = Date()
 	init(){
@@ -26,6 +28,13 @@ class Set {
 	}
 	
 	func deal3NewCards() {
+		analyzeForMatch(in: dealtCards)
+		if matchedDictionary.count > 0 {
+			startTime = Date()
+			score -= score >= 20 ? 20 : score
+			print("There was a match!")
+		}
+		
 		if deck.count >= 3, dealtCards.count < 24 {
 				for _ in 0...2 {
 					dealtCards.append(deck.remove(at: 0))
@@ -34,6 +43,7 @@ class Set {
 		else {
 			print("NOT ENOUGH SPACE IN UI")
 		}
+		analyzeForMatch(in: dealtCards)
 	}
 	
 	func startNewGame() {
@@ -42,81 +52,85 @@ class Set {
 		deck.removeAll()
 		score = 0
 		SetCard.reset()
-		for _ in 0...14 {
+		for _ in 0...80 {
 			let card = SetCard()
 			deck.append(card)
 		}
 		shuffleCards()
 		dealTwelveInitialCards()
+		analyzeForMatch(in: dealtCards)
 		startTime = Date()
 	}
 	
 	func chooseCard(at index: Int) {
+		analyzeForMatch(in: dealtCards)
 		let elapsed = Date().timeIntervalSince(startTime)
-		print("elapsed: \(elapsed)")
 		if !selectedCards.contains(dealtCards[index]), selectedCards.count < 3 {
-			selectedCards.append(dealtCards[index])
+			selectedCards.insert(dealtCards[index])
 			if selectedCards.count == 3 {
-				checkForMatch(amongCards: selectedCards)
+				playerHasMatch = assessSelectedCards(with: selectedCards) ? true : false
 			}
 		}
 		else if !selectedCards.contains(dealtCards[index]), selectedCards.count >= 3 {
-			if hasMatch && deck.count == 0 {
-				hasMatch = false
+			if playerHasMatch && deck.count == 0 {
+				playerHasMatch = false
 				print("FOO")
 				addPoints(for: elapsed)
 				dealtCards.removeAll(where: { selectedCards.contains($0) })
 				selectedCards.removeAll()
 				
-				selectedCards.append(dealtCards[index-(index-(dealtCards.count-1))])
+				selectedCards.insert(dealtCards[index-(index-(dealtCards.count-1))])
 			}
 			else {
 				print("BAR")
-				if hasMatch {
+				if playerHasMatch {
 					addPoints(for: elapsed)
 					startTime = Date()
 					replaceCards()
-					hasMatch = false
+					playerHasMatch = false
 				}
 				selectedCards.removeAll()
-				selectedCards.append(dealtCards[index])
+				selectedCards.insert(dealtCards[index])
 			}
 		}
 		else if selectedCards.contains(dealtCards[index]) {
-			if !hasMatch {
-				score -= score == 0 ? 0 : 5
+			if !playerHasMatch {
+				//player looses 5 points for deselection of
+				//non-mathing cards.
+				score -= score >= 5 ? 5 : score
 			}
-			selectedCards.removeAll(where: { $0 == dealtCards[index] })
-			hasMatch = false
+			selectedCards.remove(dealtCards[index])
+			playerHasMatch = false
 		}
 	}
 	
-	func checkForMatch(amongCards selectedCards: [SetCard]) {
-		var matchCount = 0
-		for i in 0...3 {
-			var sortedCards = selectedCards.sorted(by: { $0.props[i] < $1.props[i] })
-			if sortedCards[0].props[i] == sortedCards[1].props[i] {
-				if sortedCards[0].props[i] == sortedCards[2].props[i] {
-					matchCount += 1
-				}
-				else {
-				}
-			}
-			else {
-				if sortedCards[1].props[i] == sortedCards[2].props[i] {
-				}
-				else {
-					matchCount += 1
-				}
-			}
-		}
-		if matchCount == 4 {
-			hasMatch = true
-		}
-		else {
-			hasMatch = false
-		}
-	}
+//	func checkForMatch(amongCards selectedCards: Set<SetCard>) {
+//		var matchCount = 0
+//		//for all 4 properties
+//		for i in 0...3 {
+//			var sortedCards = selectedCards.sorted(by: { $0.props[i] < $1.props[i] })
+//			if sortedCards[0].props[i] == sortedCards[1].props[i] {
+//				if sortedCards[0].props[i] == sortedCards[2].props[i] {
+//					matchCount += 1
+//				}
+//			}
+//			else {
+//				if !(sortedCards[1].props[i] == sortedCards[2].props[i]) {
+//					matchCount += 1
+//				}
+//			}
+//		}
+//		if matchCount == 4 {
+//			for card in selectedCards {
+//				matchedCards.append(card)
+//			}
+////			playerHasMatch = true
+//		}
+////		else {
+////			playerHasMatch = false
+////		}
+//	}//end func
+
 	
 	func replaceCards() {
 		dealtCards.removeAll(where: { selectedCards.contains($0) })
@@ -153,12 +167,66 @@ class Set {
 		}//end outer for
 	}//end func
 	
+	/**
+	Takes an Array of SetCard structs and checks every combination
+	of the SetCards for a match according to the rules of Set.
+	Combinations that conform to the match rules then populate
+	the global Dictionary `matchedDictionary`, which is empited each
+	time this function is invoked.
 	
+	-Param: cards is an Array of SetCard sturcts.
+	*/
+	func analyzeForMatch(in cards: [SetCard]) {
+		var keyIncrementor = 0
+		matchedDictionary.removeAll()
+		var matchCount = 0
+		for x in 0..<cards.count {
+			for y in (x+1)..<cards.count {
+				for z in (y+1)..<cards.count {
+					let isolatedCards = [cards[x], cards[y], cards[z]]
+					
+					for i in 0...3 {
+						var sortedCards = isolatedCards.sorted(by: { $0.props[i] < $1.props[i] })
+						if sortedCards[0].props[i] == sortedCards[1].props[i] {
+							if sortedCards[0].props[i] == sortedCards[2].props[i] {
+								matchCount += 1
+							}
+						}
+						else {
+							if !(sortedCards[1].props[i] == sortedCards[2].props[i]) {
+								matchCount += 1
+							}
+						}
+					}
+					if matchCount == 4 {
+						keyIncrementor += 1
+					matchedDictionary.updateValue([isolatedCards[0], isolatedCards[1], isolatedCards[2]], forKey: keyIncrementor)
+						matchCount = 0
+						print("THERE IS A MATCH!")
+					}
+					matchCount = 0
+				}//end inner-most for
+			}
+		}
+	}//end func
 	
+	/**
+	Tests wether a given Set of SetCards conforms to rules
+	of a match in the game of Set by comparing it with values
+	in the `matchedDictionary` Dictionary.
 	
-	//TODO:
-	//	1. Initialize
-	//  2. Game Logic
-	//  3. New Game
-	//  4. Score
-}
+	-Return a boolean value indicating conformity to match rules.
+	*/
+	func assessSelectedCards(with cards: Set<SetCard>) -> Bool {
+		var hasMatch = false
+		for entry in matchedDictionary.values {
+			if cards == entry {
+				hasMatch = true
+				print("\thasMatch = true")
+				print("\tcards: \n\(cards)")
+				print("\tentry: \n\(entry)")
+			}
+		}
+		return hasMatch
+	}
+}//end class

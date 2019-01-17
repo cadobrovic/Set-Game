@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
 	
-	lazy var game = Set()
+	lazy var game = SetGame()
 	var timer = Timer()
 	var time = 0
 	var selectedColor = #colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 1)
@@ -39,26 +39,30 @@ class ViewController: UIViewController {
 	
 	@IBAction func touchDeal3NewCards(_ sender: UIButton) {
 		//re-set timer
-		if game.hasMatch {
+		
+		if game.playerHasMatch {
 			game.replaceCards()
+			resetTimer()
+			print("FOO")
 		}
 		else {
 			game.deal3NewCards()
 		}
 		updateViewFromModel()
-		
 	}
 	
 	
 	@IBAction func touchCard(_ sender: UIButton) {
 		if let cardIndex = cardButtons.firstIndex(of: sender){
-			if game.hasMatch {
+			
+			if game.playerHasMatch {
 				resetTimer()
 			}
 			game.chooseCard(at: cardIndex)
-			if game.hasMatch {
+			if game.playerHasMatch {
 				timer.invalidate()
 			}
+			
 			updateViewFromModel()
 			
 		}
@@ -92,7 +96,7 @@ class ViewController: UIViewController {
 					)
 					if game.selectedCards.contains(card) {
 					button.layer.borderWidth = 7.0
-					button.layer.borderColor = game.hasMatch ? UIColor.green.cgColor : selectedColor.cgColor
+					button.layer.borderColor = game.playerHasMatch ? UIColor.green.cgColor : selectedColor.cgColor
 					}
 					else {
 						button.layer.borderWidth = 0.0
